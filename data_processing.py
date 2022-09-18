@@ -16,13 +16,14 @@ print(book_df.columns)
 
 client = weaviate.Client("http://localhost:8080")
 
-#Checking if Book schema already exists, then delete it
+# Checking to see if Book schema already exists, then deleting it. Without this step you can only run the script once,
+# and afterwards it'll tell you that the schema already exists. 
 current_schemas = client.schema.get()['classes']
 for schema in current_schemas:
     if schema['class']=='Book':
         client.schema.delete_class('Book')
 
-#creating the schema
+# Creating the schema
 book_class_schema = {
     "class": "Book",
     "description": "A collection of books with title, author, year of publication, and publisher",
@@ -52,6 +53,7 @@ book_class_schema = {
 
 client.schema.create_class(book_class_schema)
 
+# We're telling the client how to upload the data into the schema.
 client.batch.configure(
   batch_size=10, 
   # dynamically update the `batch_size` based on import speed
@@ -62,10 +64,11 @@ client.batch.configure(
 
 for i in range (0,len(book_df)):
     item = book_df.iloc[i]
-    print(i, item)
-    print()
+    # print(i, item)
+    # print()
     book_object = {
 
+        # Using all lowercases to resolve early pattern-matching issues.
         'book_title': str(item['book_title']).lower(),
         'book_author': str(item['book_author']).lower(),
         'year_of_publication': str(item['year_of_publication']).lower(),
@@ -73,6 +76,9 @@ for i in range (0,len(book_df)):
     }
 
     try:
+        # This is where the magic happens. We're effectively 'uploading' the formatted data into the schema.
+        # Think of the schema like an empty library, the data as actual books, and this next line of code 
+        # as the process of putting the books on the shelf in the pre-defined order.
         client.batch.add_data_object(book_object, "Book")
     except BaseException as error:
         print("Import Failed at: ",i)

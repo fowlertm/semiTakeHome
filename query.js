@@ -43,7 +43,7 @@ async function get_filtered_results(text){
         .catch(err => {
             console.error(err)
         })
-        console.log(data)
+        // console.log(data)
     return data;
 }
 

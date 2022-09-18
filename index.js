@@ -34,7 +34,9 @@ app.get('/search', (req, res) => {
     text = req.query['searched_data'].toLowerCase();
     let get_results = get_filtered_results(text);
     get_results.then(results => {
-      //console.log(results.data.Get) // Commented out, but useful for debugging.
+      //console.log(results.data.Get) // Commented out, but useful for debugging. If everything is working properly, 
+      // you should see actual JSON objects with information from the 'Book' data structure, which was returned when 
+      // we used a search string to search over our books data.
       res.render("search.ejs", { book_info: results.data.Get.Book }) });
     
 })

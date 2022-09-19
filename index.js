@@ -7,8 +7,8 @@ const bodyParser = require('body-parser');
 const weaviate = require("weaviate-client");
 const e = require('express');
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'views')));
-let initial_path = path.join(__dirname, "views");
+// app.use(express.static(path.join(__dirname, 'views')));
+// let initial_path = path.join(__dirname, "views");
 
 // Importing query functions from query.js
 let { get_filtered_results } = require('./query')

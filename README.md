@@ -178,5 +178,9 @@ Here are the results for the string 'war':
 
 Here are the results for the string 'love':
 
-[Love results](views/love.png)
+![Love results](views/love.png)
+
+And there you have it! A simple way of using weaviate as a backend search engine. To find out more visit us at [weaviate.io](weaviate.io).
+
+Thank you.
 

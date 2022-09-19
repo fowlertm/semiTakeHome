@@ -64,27 +64,27 @@
       <% for (let i = 0;i<book_info.length; i++) { %> 
       <div class="card">
 
-              <div class="book-item-content">
-                <div class="book-item-author">
+              <div class="book-item-content" style = "text-transform:capitalize;">
+                <div class="book-item-title">
                   <div class="book-info">
                       <i class="bx bxs-star"></i>
                       <span><%=book_info[i].book_title%></span>
                   </div>
-                  <div class="book-item-author">
-                      <div class="book-info">
-                          <i class="bx bxs-star"></i>
-                          <span><%=book_info[i].book_author%></span>
-                      </div>
-                  <div class="book-item-year-of-publication">
-                        <div class="book-info">
-                            <i class="bx bxs-star"></i>
-                            <span><%=book_info[i].year_of_publication%></span>
-                        </div>
-                  <div class="book-item-publisher">
-                          <div class="book-info">
-                              <i class="bx bxs-star"></i>
-                              <span><%=book_info[i].publisher%></span>
-                          </div>
+                <div class="book-item-author">
+                    <div class="book-info">
+                        <i class="bx bxs-star"></i>
+                        <span><%=book_info[i].book_author%></span>
+                    </div>
+                <div class="book-item-year-of-publication">
+                  <div class="book-info">
+                      <i class="bx bxs-star"></i>
+                      <span><%=book_info[i].year_of_publication%></span>
+                  </div>
+                <div class="book-item-publisher">
+                    <div class="book-info">
+                      <i class="bx bxs-star"></i>
+                        <span><%=book_info[i].publisher%></span>
+                    </div>
                   </div>
               </div>
               </form>

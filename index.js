@@ -1,5 +1,5 @@
 
-// Importing required library
+// Importing required libraries
 const express = require('express')
 const app = express()
 const path = require('path')

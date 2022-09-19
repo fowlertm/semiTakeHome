@@ -47,8 +47,8 @@
 <!-- Search Space Starts -->
 
 <!-- The following two lines are left in because they can be useful in debugging. -->
-<!-- <%='hey'%> -->
-<!-- <%=book_info%> -->
+<%='hey'%> -->
+<%=book_info%>
 
 <% if(book_info && book_info.length!=null){%>
 <div class="section-header">
@@ -65,6 +65,12 @@
       <div class="card">
 
               <div class="book-item-content" style = "text-transform:capitalize;">
+                <div class="book-item-isbn">
+                  <div class="book-info">
+                    <i class="bx bxs-star"></i>
+                      <span><%=book_info[i].book_isbn%></span>
+                  </div>
+                </div>
                 <div class="book-item-title">
                   <div class="book-info">
                       <i class="bx bxs-star"></i>

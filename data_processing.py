@@ -6,8 +6,9 @@ import math
 book_df = pd.read_csv("books.csv", sep=';', error_bad_lines=False, encoding='latin-1')
 book_df = book_df.head(1000)
 
-book_df.drop(columns=['ISBN', 'Image-URL-S', 'Image-URL-M', 'Image-URL-L'], inplace=True)
-book_df.rename(columns={'Book-Title': 'book_title',
+book_df.drop(columns=['Image-URL-S', 'Image-URL-M', 'Image-URL-L'], inplace=True)
+book_df.rename(columns={'ISBN': 'book_isbn',
+                        'Book-Title': 'book_title',
                         'Book-Author': 'book_author',
                         'Year-Of-Publication': 'year_of_publication',
                         'Publisher': 'publisher'}, inplace=True)
@@ -28,6 +29,11 @@ book_class_schema = {
     "class": "Book",
     "description": "A collection of books with title, author, year of publication, and publisher",
     "properties": [
+        {
+            "name": "book_isbn",
+            "dataType": ["string"],
+            "description": "The ISBN number of the book", 
+        },
         {
             "name": "book_title",
             "dataType": ["string"],
@@ -68,7 +74,8 @@ for i in range (0,len(book_df)):
     # print()
     book_object = {
 
-        # Using all lowercases to resolve early pattern-matching issues.
+        # Using all text fields lowercases to resolve early pattern-matching issues.
+        'book_isbn': str(item['book_isbn']),
         'book_title': str(item['book_title']).lower(),
         'book_author': str(item['book_author']).lower(),
         'year_of_publication': str(item['year_of_publication']).lower(),

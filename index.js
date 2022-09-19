@@ -7,11 +7,11 @@ const bodyParser = require('body-parser');
 const weaviate = require("weaviate-client");
 const e = require('express');
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'views')));
-let initial_path = path.join(__dirname, "views");
+// app.use(express.static(path.join(__dirname, 'views')));
+// let initial_path = path.join(__dirname, "views");
 
 // Importing query functions from query.js
-let { get_filtered_results } = require('./query')
+let { get_recommended_books } = require('./query')
 
 // Setting up client.
 const client = weaviate.client({
@@ -32,9 +32,10 @@ app.get('/', (req, res) => {
 app.get('/search', (req, res) => {
     // stores the searched text in variable "text"
     text = req.query['searched_data'].toLowerCase();
-    let get_results = get_filtered_results(text);
+    let get_results = get_recommended_books(text);
+    console.log(get_results)
     get_results.then(results => {
-      //console.log(results.data.Get) // Commented out, but useful for debugging. If everything is working properly, 
+      console.log(results.data.Get) // Commented out, but useful for debugging. If everything is working properly, 
       // you should see actual JSON objects with information from the 'Book' data structure, which was returned when 
       // we used a search string to search over our books data.
       res.render("search.ejs", { book_info: results.data.Get.Book }) });

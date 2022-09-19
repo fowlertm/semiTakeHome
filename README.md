@@ -75,7 +75,8 @@ The actual schema is defined with a JSON notation:
             "description": "The publisher of the book", 
         }
     ]
-}```
+}
+```
 
 The naming convention here is pretty intuitive. The `class` is what we call the schema throughout the rest of the code, each of the properties are properties of the underlying data, the `dataType` is the type of data contained in each property, and so on. 
 

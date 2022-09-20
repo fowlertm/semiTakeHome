@@ -8,7 +8,7 @@ The raw data can be downloaded from [Kaggle](https://www.kaggle.com/datasets/sau
 
 For the purposes of this PoC, I've elected to only use the `books.csv` file.
 
-In the opening lines of `data_processing.py` this file has been loaded and lightly processed (renaming and standardizing the columns, etc.) to make it suitable for populating the schema (more on this momentarily.)
+In the opening lines of `data_processing.py` this file has been loaded and lightly processed (renaming and standardizing the columns, etc.) to make it suitable for populating the schema (more on this momentarily.) And in order to speed up testing and development, I've only used the first 1000 rows from `books.csv` via `book_df = book_df.head(1000)` on line 7. 
 
 ## Working with Weaviate
 Weaviate is an open source ​​vector database and search engine. Vectors are arrays (i.e. lists) of numbers, and they are ubiquitous in machine learning. Computers only operate on numbers, so before an algorithm can be trained to generate captions, answer questions, or translate a language, the inputs must be represented mathematically.

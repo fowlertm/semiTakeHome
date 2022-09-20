@@ -176,7 +176,7 @@ Finally, on the last lines we tell the app which port to listen on. I've used po
 
 With this context established, actually running the application couldn't be simpler. 
 
-You should already have Docker going from the Weaviate documentation. Booting up the book searcher simply requires running `npm start` in the command line, which should return this:
+You should already have Docker going from the Weaviate documentation (if Docker is powered down try `docker-compose up`). Booting up the book searcher simply requires running `npm start` in the command line, which should return this:
 
 ```
 > book-search-weaviate@1.0.0 start

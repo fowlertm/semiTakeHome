@@ -176,7 +176,7 @@ Finally, on the last lines we tell the app which port to listen on. I've used po
 
 With this context established, actually running the application couldn't be simpler. 
 
-You should already have Docker going from the Weaviate documentation (if Docker is powered down try `docker-compose up`). Booting up the book searcher simply requires running `npm start` in the command line, which should return this:
+You should already have Docker going from the Weaviate documentation (if Docker is powered down try `docker-compose up` in the command line). Booting up the book searcher simply requires running `npm start` in the command line, which should return this:
 
 ```
 > book-search-weaviate@1.0.0 start
@@ -185,7 +185,7 @@ You should already have Docker going from the Weaviate documentation (if Docker 
 The app is running on: http://localhost:3000
 ```
 
-`npm` stands for 'Node Package Manager', and it is a way of managing or using any of the thousands of packages built with the Node.js framework. Node.js, in turn, is an synchronous event-driven JavaScript runtime which let's you build performant network applications ([more](https://nodejs.org/en/about/))
+`npm` stands for 'Node Package Manager', and it is a way of managing or using any of the thousands of packages built with the Node.js framework. Node.js, in turn, is an synchronous event-driven JavaScript runtime which let's you build performant network applications. ([more](https://nodejs.org/en/about/))
 
 Running `npm start` prompts Node.js to look in the `package.json` file and do whatever it finds in the `start` field--in this example, that's `"node index.js"` on line 7. This translates to 'run `index.js` as a node file', and we've already covered what `index.js` does. 
 

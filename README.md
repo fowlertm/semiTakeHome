@@ -189,9 +189,11 @@ The app is running on: http://localhost:3000
 
 Running `npm start` prompts Node.js to look in the `package.json` file and do whatever it finds in the `start` field--in this example, that's `"node index.js"` on line 7. This translates to 'run `index.js` as a node file', and we've already covered what `index.js` does. 
 
-If all this works and you get back the `The app is running on: http://localhost:3000` message, you can navigate to `http://localhost:3000` and you should see something like this:
+If all this works and you get back the `The app is running on: http://localhost:3000` message, you can navigate to `http://localhost:3000` and you should see something like this default page:
 
 ![War results](views/default.png)
+
+As with Google, your search query goes in the box in the middle.
 
 Here are the results for the string 'war':
 

@@ -203,7 +203,7 @@ Here are the results for the string 'love':
 
 ![Love results](views/love.png)
 
-And there you have it! A simple way of using weaviate as a backend search engine.
+And there you have it! A simple way of using Weaviate as a backend search engine.
 
 ### Summary and conclusion.
 

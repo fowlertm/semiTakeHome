@@ -6,20 +6,24 @@ This project involves the creation of a simple tool for doing text-based search 
 ### Data
 The raw data can be downloaded from [Kaggle](https://www.kaggle.com/datasets/saurabhbagchi/books-dataset). The zip file contains three CSVs--one with information on the books, one with user ratings, and one with user information, all of it pulled from Amazon.
 
-For the purposes of this PoC, I've elected only to use the `books.csv` file.
+For the purposes of this PoC, I've elected to only use the `books.csv` file.
 
-In the opening lines of `data_processing.py` this file has been loaded and lightly processed to make it suitable for populating the schema (more on this momentarily.)
+In the opening lines of `data_processing.py` this file has been loaded and lightly processed (renaming columns, etc.) to make it suitable for populating the schema (more on this momentarily.)
 
 ## Working with Weaviate
-Weaviate is an open source ​​vector database and search engine. Vectors are arrays (i.e. lists) of numbers, and they are ubiquitous in machine learning. Computers only operate on numbers, so before an algorithm can be trained to generate captions, answer questions, or translate a language the inputs must be represented mathematically.
+Weaviate is an open source ​​vector database and search engine. Vectors are arrays (i.e. lists) of numbers, and they are ubiquitous in machine learning. Computers only operate on numbers, so before an algorithm can be trained to generate captions, answer questions, or translate a language, the inputs must be represented mathematically.
 
 The most common way to do this is turn the inputs into vectors. 
 
-For this reason, a SaaS platform which can store and search over vector representation could find applications in domains as far-flung as NLP, protein folding, and image processing.
+For this reason, a SaaS platform which can store and search over vector representations could find applications in domains as far-flung as NLP, protein folding, and image processing.
 
 Fully detailing the process of setting up Weaviate is beyond the scope of this tutorial, but interested parties are referred to their [excellent documentation](https://weaviate.io/developers/weaviate/current/getting-started/index.html). 
 
 To follow along you'll need to install Weaviate's command line tools and figure out how to run Weaviate locally off a Docker image. The rest is detailed below.
+
+If you're new to Docker, it's considered a best practice to shut down containers after you're done with them. If you don't and you start moving files around you could end up with strange errors (see e.g. my resolving a port conflict stemming from this exact situation [here](https://www.loom.com/share/2cc130ee18254a0a96aff2b5e97712a4)). 
+
+If your computer restarts you'll have to re-run `docker-compose up` as well as `npm start`.
 
 ## Defining the Schema
 
@@ -46,9 +50,9 @@ for schema in current_schemas:
         client.schema.delete_class('Book')
 ```
 
-This is useful because once you've defined a schema you can't define another one with the same name. That means if you define a schema, correct a typo, and then run your code again, it'll throw an error unless you have this code snippet in your file. 
+This is useful because once you've defined a schema you can't define another one with the same name. That means if you define a schema called `'Files'`, correct a typo, and then try to define `'Files'` again, it'll throw an error unless you have this code snippet in your file. 
 
-The actual schema is defined with a JSON notation:
+The actual schema definition is handled with JSON notation:
 
 ```book_class_schema = {
     "class": "Book",
@@ -82,7 +86,7 @@ The naming convention here is pretty intuitive. The `class` is what we call the 
 
 The following line, `client.schema.create_class(book_class_schema)`, actually creates the schema. Once this is executed we have the schema, but it does not yet contain any data. 
 
-The `for` loop on line 65 is where the magic happens. We've loaded and pre-processed our data, and now we're essentially 'uploading' the formatted data into the schema.
+The `for` loop on line 65 is where the magic happens. We've loaded and pre-processed our data, defined our schema, and now we're essentially 'uploading' the formatted data into the schema.
 
 It's easy to grasp the steps involved here by analogizing them to building a library. First, we have to create plans for the library, covering where the shelves go, how many bathrooms there are, etc. Then, we'd pass those plans to a construction firm that would actually build the structure. Then, we'd fill the empty shelves with books. 
 
@@ -96,9 +100,9 @@ The answer is simple: we use queries.
 
 As its name implies, a query is a request for information--and since we're talking about computers, those requests have to be structured in a certain way.
 
-In this PoC, we use GraphQL to query our book database. GraphQL is an open-source tool for interacting with APIs that was developed by Facebook. 
+Weaviate uses GraphQL to query all databases. GraphQL is an open-source tool for interacting with APIs that was developed by Facebook. 
 
-GraphQL has a JSON-like structure, and in the `query.js` file you can find our query (wrapped in some javascript so another file can later call it and display it on a webpage):
+GraphQL has a JSON-like structure, and in the `query.js` file you can find our query:
 
 ```
 async function get_filtered_results(text){
@@ -144,11 +148,13 @@ async function get_filtered_results(text){
 }
 ```
 
+(NOTE: The vanilla GraphQL starts with `client.graphql` and ends at `return info`, but the query is wrapped in a javascript function so another file can later call it and display the returned data on a webpage.)
+
 This function takes a search string and uses it to search over the database via the `client.graphql` functionality. As before, I think if you read this code slowly you should be able to puzzle out what each part of it does based on its name, even with little coding experience. 
 
-For example, `.withSort()` sorts our results on a certain value (`'year_of_publication']`) and in a certain way (`'desc'` means 'descending).
+For example, `.withSort()` sorts our results on a certain value (`'year_of_publication'`) and in a certain way (`'desc'` means 'descending).
 
-`.withWhere()` gives us considerable power in modulating how our search is performed. If you remember college math, the `Or` operator is permissive, and we could tighten it up by using `And` instead. Because we've included all the properties in our schema (title, author, publication year, and publisher), the search string will match on all those fields, and if we only wanted to search on the title we could remove the other fields. 
+`.withWhere()` gives us considerable power in modulating how our search is performed. If you remember college math, the `Or` operator is permissive, and we could tighten it up by using `And` instead. Because we've included all the properties in our schema (title, author, publication year, and publisher), the search string will match on all those fields. 
 
 The final line in this file is `module.exports = { get_filtered_results }`, and it's important. It makes this function available for the next file, `index.js`. 
 
@@ -158,7 +164,7 @@ In `index.js`, we're essentially using javascript to define a super-simple appli
 
 After importing some libraries, we import the function from `query.js` on line 14.
 
-The first `app.get` statement on line 27 renders what we're actually going to see in the browser by referencing the information defined in `search.ejs`. It'll pass whatever is in `book_info` to the `search.ejs` file, which will then display it according to our specifications. 
+The first `app.get` statement on line 27 renders what we're actually going to see in the browser by referencing the information defined in `search.ejs`. It'll pass whatever is in `book_info` to the `search.ejs` file, which will then display it according to the specifications in `search.ejs`. 
 
 On line 34 we accept a search string, on line 35 we pass it to the `get_filtered_results` function, then we get the results and pass them (as `book_info`) to `search.ejs`.
 

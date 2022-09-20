@@ -172,11 +172,26 @@ Finally, on the last lines we tell the app which port to listen on. I've used po
 
 `search.ejs` contains a lot of HTML and a smattering of javascript which renders the contents of `book_info`. I think a tutorial on HTML would take us too far afield, you need only understand that this gathers the contents of `book_info` from the function in `index.js` and then offers instructions for the browser as to how to display the results.
 
-### Summary and conclusion.
+### Actually running the application.
 
-Let's pause for a moment and recap. In `data_processing.py` we pulled in a books dataset and did some basic pre-processing on it, then we defined, created, and populated the schema. In `query.js` we defined a GraphQL query which would let us ask this schema for information, and we exported the function so that `index.js` could access it. In `index.js` we set up a lightweight application that could use the query in `query.js` to get data from the schema and pass it to `search.ejs`, which renders the result in a webpage. 
+With this context established, actually running the application couldn't be simpler. 
 
-What comes out of all this is a simple web-based application which can take a search string and return any book record containing that string in any of its fields.
+You should already have Docker going from the Weaviate documentation. Booting up the book searcher simply requires running `npm start` in the command line, which should return this:
+
+```
+> book-search-weaviate@1.0.0 start
+> node index.js
+
+The app is running on: http://localhost:3000
+```
+
+`npm` stands for 'Node Package Manager', and it is a way of managing or using any of the thousands of packages built with the Node.js framework. Node.js, in turn, is an synchronous event-driven JavaScript runtime which let's you build performant network applications ([more](https://nodejs.org/en/about/))
+
+Running `npm start` prompts Node.js to look in the `package.json` file and do whatever it finds in the `start` field--in this example, that's `"node index.js"` on line 7. This translates to 'run `index.js` as a node file', and we've already covered what `index.js` does. 
+
+If all this works and you get back the `The app is running on: http://localhost:3000` message, you can navigate to `http://localhost:3000` and you should see something like this:
+
+![War results](views/default.png)
 
 Here are the results for the string 'war':
 
@@ -186,7 +201,15 @@ Here are the results for the string 'love':
 
 ![Love results](views/love.png)
 
-And there you have it! A simple way of using weaviate as a backend search engine. To find out more visit us at [weaviate.io](weaviate.io).
+And there you have it! A simple way of using weaviate as a backend search engine.
+
+### Summary and conclusion.
+
+Let's pause for a moment and recap. In `data_processing.py` we pulled in a books dataset and did some basic pre-processing on it, then we defined, created, and populated the schema. In `query.js` we defined a GraphQL query which would let us ask this schema for information, and we exported the function so that `index.js` could access it. In `index.js` we set up a lightweight application that could use the query in `query.js` to get data from the schema and pass it to `search.ejs`, which renders the result in a webpage. 
+
+What comes out of all this is a simple web-based application which can take a search string and return any book record containing that string in any of its fields.
+
+To find out more about the future of vector search and what it can do for your enterprise, visit us at [weaviate.io](weaviate.io)
 
 Thank you.
 
